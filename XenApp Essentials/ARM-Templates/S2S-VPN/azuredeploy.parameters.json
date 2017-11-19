@@ -1,0 +1,24 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+		"localGatewayIpAddress": {
+	    "value": "52.25.48.88"
+		},
+		"localAddressPrefix": {
+	    "value": "192.168.0.0/24"
+		},
+		"azureVNetAddressPrefix": {
+	    "value": "10.1.128.0/17"
+		},
+		"subnetPrefix": {
+	    "value": "10.1.128.0/24"
+		},
+		"gatewaySubnetPrefix": {
+	    "value": "10.1.255.0/27"
+		},
+		"sharedKey": {
+	    "value": "GEN-UNIQUE"
+		}
+    }
+}
