@@ -1,7 +1,7 @@
 {
   "itemDisplayName": "Create a Site-to-Site VPN Connection",
   "description": "This template create a Site-to-Site VPN Connection.",
-  "summary": "Create a Site-to-Site VPN Connection in Azure to any supported VPN Gateway premises or other cloud provider.",
+  "summary": "Create a Site-to-Site VPN Connection in Azure to any supported VPN Gateway, on-premise or other cloud provider.",
   "githubUsername": "thomaskrampe",
   "dateUpdated": "2017-11-02"
 }
