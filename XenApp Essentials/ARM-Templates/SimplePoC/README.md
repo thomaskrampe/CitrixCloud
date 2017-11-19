@@ -1,5 +1,5 @@
 # XenApp Essentials simple Proof of Concept
-Before you start a XenApp Essentials Proof of Concept you have to prepare your Azure Account. Part of this preparation is to create a Resource Group within your valid subscription and some virtual machines like one or more domain controller (if you prefer to use a dedicated forest in Azure), a file server VM used for user profile data and, of corse, a Golden Image VM. Visit the [Wiki Pages](https://github.com/thomaskrampe/XenAppEssentials/wiki) to learn more about XenApp Essentials on Azure.
+Before you start a XenApp Essentials Proof of Concept you have to prepare your Azure Account. Part of this preparation is to create a Resource Group within your valid subscription and some virtual machines like one or more domain controller (if you prefer to use a dedicated forest in Azure), a file server VM used for user profile data and, of corse, a Golden Image VM. Visit the [Wiki Pages](https://github.com/thomaskrampe/CitrixCloud/wiki) to learn more about XenApp Essentials on Azure.
 
 ![XenApp Essentials Architecture](http://thomas-krampe.com/wp-content/uploads/2017/10/2017-10-10_11-18-17.png)
 
@@ -13,8 +13,8 @@ Please do not be restless the deployment takes a while (approx. 20 minutes) beca
 Want to try it?
 All you have to do is clicking the button below.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fthomaskrampe%2FXenAppEssentials%2Fmaster%2FARM-Templates%2FSimplePoC%2Fazuredeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
-<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fthomaskrampe%2FXenAppEssentials%2Fmaster%2FARM-Templates%2FSimplePoC%2Fazuredeploy.json" target="_blank"><img src="http://armviz.io/visualizebutton.png"/></a>
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fthomaskrampe%2FCitrixCloud%2Fmaster%2FXenApp%20Essentials%2FARM-Templates%2FSimplePoC%2Fazuredeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
+<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fthomaskrampe%2FCitrixCloud%2Fmaster%2FXenApp%20Essentials%2FARM-Templates%2FSimplePoC%2Fazuredeploy.json" target="_blank"><img src="http://armviz.io/visualizebutton.png"/></a>
 
 ## PowerShell
 Just clicking on a Azure Deploy Button is fine so far but in my opion it's far away from automation. So if you prefer PowerShell for deploying this template please use the DeploySimpleXAEPoC.ps1 PowerShell script.
