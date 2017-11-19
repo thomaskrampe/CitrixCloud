@@ -1,0 +1,7 @@
+{
+  "itemDisplayName": "Creates a Citrix XenApp Essentials PoC environment on Azure with a new AD Forest",
+  "description": "This template creates three new Azure VM's. It configures the first VM to be an AD DC for a new Forest and create a File Server and a Golden Master Image VM which are both domain joined.",
+  "summary": "This template creates an Azure XenApp Essentials PoC with AD, File Server and Golden Master Server.",
+  "githubUsername": "thomaskrampe",
+  "dateUpdated": "2017-09-12"
+}

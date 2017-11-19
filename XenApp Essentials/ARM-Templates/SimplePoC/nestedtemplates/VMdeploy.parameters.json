@@ -1,0 +1,36 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "existingVNETName": {
+      "value": "myvnet"
+    },
+    "existingSubnetName": {
+      "value": "mysubnet"
+    },
+    "vmSize": {
+      "value": "Standard_A2"
+    },
+    "domainToJoin": {
+      "value": "contoso.local"
+    },
+    "domainUsername": {
+      "value": "azureAdmin"
+    },
+    "domainPassword": {
+      "value": "P@ssword01!Azure"
+    },
+    "domainJoinOptions": {
+      "value": 3
+    },
+    "vmAdminUsername": {
+      "value": "azureAdmin"
+    },
+    "vmAdminPassword": {
+      "value": "P@ssword01!Azure!"
+    },
+    "dnsLabelPrefix": {
+      "value": "GEN-UNIQUE" 
+    }
+  }
+}
