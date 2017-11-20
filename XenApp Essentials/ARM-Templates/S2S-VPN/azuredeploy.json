@@ -15,69 +15,71 @@
     },
     "localGatewayName": {
       "type": "string",
-      "defaultValue": "localGateway",
+      "defaultValue": "onPremGW",
       "metadata": {
-        "description": "Arbitrary name for gateway resource representing your local/on-prem gateway"
+        "description": "This is the name for your local gateway (eg. onPremGW)"
       }
     },
     "localGatewayIpAddress": {
       "type": "string",
       "metadata": {
-        "description": "Public IP of your local/on-prem gateway"
+        "description": "This is the public IP address of your on premise VPN device (as mentioned, no NAT device)"
       }
     },
     "localAddressPrefix": {
       "type": "string",
+      "defaultValue": "192.168.0.0/24",
       "metadata": {
-        "description": "CIDR block representing the address space of your local/on-prem network's Subnet"
+        "description": "This is the CIDR block representing your on premise IP adress space (eg. 192.168.0.0/24)"
       }
     },
     "virtualNetworkName": {
       "type": "string",
-      "defaultValue": "azureVnet",
+      "defaultValue": "myAzureVnet",
       "metadata": {
-        "description": "Arbitrary name for the Azure Virtual Network"
+        "description": "This is the name for your Azure virtual network (eg. myAzureVnet)"
       }
     },
     "azureVNetAddressPrefix": {
       "type": "string",
-      "defaultValue": "10.3.0.0/16",
+      "defaultValue": "10.0.1.0/16",
       "metadata": {
-        "description": "CIDR block representing the address space of the Azure VNet"
+        "description": "This is the address space for your Azure virtual network. It should be big enough for your needs (eg. 10.0.1.0/16)"
       }
     },
     "subnetName": {
       "type": "string",
-      "defaultValue": "Subnet1",
+      "defaultValue": "frontendSnet",
       "metadata": {
-        "description": "Arbitrary name for the Azure Subnet"
+        "description": "This is the name for your resources subnet (eg. frontendSnet)"
       }
     },
     "subnetPrefix": {
       "type": "string",
+      "defaultValue": "10.0.1.0/24",
       "metadata": {
-        "description": "CIDR block for VM subnet, subset of azureVNetAddressPrefix address space"
+        "description": "This is the CIDR block representing your Azure resources. It must be within the virtual network range above (eg. 10.0.1.0/24)"
       }
     },
     "gatewaySubnetPrefix": {
       "type": "string",
-      "defaultValue": "10.3.200.0/29",
+      "defaultValue": "10.0.255.0/27",
       "metadata": {
-        "description": "CIDR block for gateway subnet, subset of azureVNetAddressPrefix address space"
+        "description": "This is the CIDR block for your gateway subnet. We don't need a big range but it must be within the virtual network range as well (eg. 10.0.255.0/27 should give you enough space)"
       }
     },
     "gatewayPublicIPName": {
       "type": "string",
-      "defaultValue": "azureGatewayIP",
+      "defaultValue": "azureGwPIP",
       "metadata": {
-        "description": "Arbitrary name for public IP resource used for the new azure gateway"
+        "description": "This is the name for the public IP address (e.g AzureGwPIP)"
       }
     },
     "gatewayName": {
       "type": "string",
-      "defaultValue": "azureGateway",
+      "defaultValue": "azureGW",
       "metadata": {
-        "description": "Arbitrary name for the new gateway"
+        "description": "This is the name for the gateway (eg. azureGW)"
       }
     },
     "gatewaySku": {
@@ -85,34 +87,31 @@
       "defaultValue": "Basic",
       "allowedValues": [
         "Basic",
-        "Standard",
-        "HighPerformance"
+        "VpnGw1",
+        "VpnGw2",
+        "VpnGw3"
       ],
       "metadata": {
-        "description": "The Sku of the Gateway. This must be one of Basic, Standard or HighPerformance."
+        "description": "This is the SKU for your gateway (eg. Basic)"
       }
     },
     "connectionName": {
       "type": "string",
-      "defaultValue": "Azure2Other",
+      "defaultValue": "azure2local",
       "metadata": {
-        "description": "Arbitrary name for the new connection between Azure VNet and other network"
+        "description": "This is the name for the connection to your on premise resources (eg. azure2local)"
       }
     },
     "sharedKey": {
       "type": "string",
       "metadata": {
-        "description": "Shared key (PSK) for IPSec tunnel"
+        "description": "This is the Pre Shared Key from your on premise VPN device."
       }
     }
 },
   "variables": {
-    "imagePublisher": "Canonical",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-    "gatewaySubnetRef": "[concat(variables('vnetID'),'/subnets/','GatewaySubnet')]",
-    "subnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('subnetName'))]",
-    "api-version": "2015-06-15",
-    "storage-api-version": "2015-05-01-preview"
+    "gatewaySubnetRef": "[concat(variables('vnetID'),'/subnets/','GatewaySubnet')]"
   },
   "resources": [
     {
