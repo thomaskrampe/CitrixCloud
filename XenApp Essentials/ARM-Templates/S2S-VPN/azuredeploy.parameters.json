@@ -9,13 +9,13 @@
 	    "value": "192.168.0.0/24"
 		},
 		"azureVNetAddressPrefix": {
-	    "value": "10.1.128.0/17"
+	    "value": "10.0.1.0/16"
 		},
 		"subnetPrefix": {
-	    "value": "10.1.128.0/24"
+	    "value": "10.0.1.0/24"
 		},
 		"gatewaySubnetPrefix": {
-	    "value": "10.1.255.0/27"
+	    "value": "10.0.255.0/27"
 		},
 		"sharedKey": {
 	    "value": "GEN-UNIQUE"
