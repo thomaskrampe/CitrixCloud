@@ -48,9 +48,9 @@ param (
     [Parameter(Mandatory)]
     [string]$DeploymentName,    
 
-    [string]$TemplateFilePath = "https://raw.githubusercontent.com/thomaskrampe/CitrixCloud/master/XenApp%20Essentials/ARM-Templates/SimplePoC/azuredeploy.json",  
+    [string]$TemplateFilePath = "https://raw.githubusercontent.com/thomaskrampe/CitrixCloud/master/XenApp%20Essentials/ARM-Templates/S2S-VPN/azuredeploy.json",  
  
-    [string]$ParametersFilePath = "https://raw.githubusercontent.com/thomaskrampe/CitrixCloud/master/XenApp%20Essentials/ARM-Templates/SimplePoC/azuredeploy.parameters.json"
+    [string]$ParametersFilePath = "https://raw.githubusercontent.com/thomaskrampe/CitrixCloud/master/XenApp%20Essentials/ARM-Templates/S2S-VPN/azuredeploy.parameters.json"
 )
 
 $ErrorActionPreference = "Stop"
