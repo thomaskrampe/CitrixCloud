@@ -47,3 +47,12 @@ Want to try it? All you have to do is clicking the **Deploy to Azure** button be
 | PSK                      | This is the Pre Shared Key from your on premise VPN device.                                                                                                                        |
 
 If you use the SimplePoC or AdvancedPoC template later, make sure you use the same values for virtual network and virtual subnet.
+
+## PowerShell
+Just clicking on a Azure Deploy Button is fine so far but in my opion it's far away from automation. So if you prefer PowerShell for deploying this template please use the DeployS2SVPN.ps1 PowerShell script.
+
+**Example:**
+
+```
+DeployS2SVPN.ps1 -SubscriptionID "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" -ResourceGroupName "XAE-RG" -ResourceGroupLocation "Northeurope" -DeploymentName "MyDeployment"
+```
