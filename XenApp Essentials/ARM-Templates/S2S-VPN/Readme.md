@@ -27,7 +27,8 @@ Want to try it? All you have to do is clicking the **Deploy to Azure** button be
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
-###Something about the parameters
+### Something about the parameters
+
 | Parameter                | Description                                                                                                                                                                        |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | VPN Type                 | This can be either Policy based (which is a static Gateway) or Route based (which is dynamic). Normally you should use the static gateway but it's up to you.                      |
