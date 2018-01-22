@@ -1,9 +1,9 @@
 <#
  .SYNOPSIS
-        Install Chocolatey with Custome Script Extension
+        Install Chocolatey with Custom Script Extension
 
  .DESCRIPTION
-        Install Chocolatey with Custome Script Extension and applications via Chocolatery
+        Install Chocolatey with CustomeScript Extension and applications via Chocolatery
 
   .LINK
         https://github.com/thomaskrampe/CitrixCloud/tree/master/XenApp%20Essentials/CustomScriptExtension 
