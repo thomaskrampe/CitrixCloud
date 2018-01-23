@@ -15,6 +15,7 @@
         Last change   : 22.01.2018 | v1.0 | Release it to GitHub
 #>
 
+# Install Chocolatey
 iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1')) 
 
 # Enable global confirmation
