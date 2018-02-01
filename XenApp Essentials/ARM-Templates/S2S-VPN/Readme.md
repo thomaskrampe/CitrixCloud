@@ -5,6 +5,8 @@ This template will create a Site-to-Site VPN containing a Virtual Network, a sub
 
 **Important:** You must have a valid public IP address for your on-premise VPN gateway, this cannot be behind a NAT device. There is a workaround available, but for now - no NAT possible. 
 
+If your local gateway is a Netgear device, read my [blog article](http://thomas-krampe.com/2017/11/netgear-fvs336gv3-und-azure-site-to-site-vpn/) about S2S-VPN and Netgear endpoint (sorry German only but with a lot of screen shots).
+
 This template will create the following resources:
 
 - Virtual Network in an existing or new resource group
