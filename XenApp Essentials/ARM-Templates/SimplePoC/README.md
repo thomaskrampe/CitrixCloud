@@ -6,6 +6,8 @@ Before you start a XenApp Essentials Proof of Concept you have to prepare your A
 This ARM template covers the environment within the red frame in the architecture diagram above. It creates three VM's in your resource group. The first VM acts as a domain controller and creates a new AD forest. It creates a Availability Group and a Loadbalancer for this Domain Controller VM as well (in case you will add more Domain Controller later).
 The remaining VM's are used as a file server and a golden image master server, both VM's are joined to the previously created domain. Keep in mind that I use Windows 2016 Server and Standard D2v2 instances for all VM's in this template. 
 
+If you don't like the D2v2 instances I choose, just change it. There is a good overview at [Azure Compute Info](http://computeinfo.azurewebsites.net) regarding all available instances.
+
 You can use this template as is by simply clicking on the deployment button below, but you can also change hostnames, IP-Addresses and so on by editing the variables in the main template "azuredeploy.json" before deploying if you don't like my pre-defined values. 
 
 Please do not be restless the deployment takes a while (approx. 20 minutes) because the forest creation is done via DSC and we have to copy some stuff before. 
