@@ -15,8 +15,8 @@ Please do not be restless the deployment takes a while (approx. 20 minutes) beca
 Want to try it?
 All you have to do is clicking the button below.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fthomaskrampe%2FCitrixCloud%2FARM-Templates%2FAdvancedPoC%2Fazuredeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
-<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fthomaskrampe%2FCitrixCloud%2Fmaster%2FFARM-Templates%2FAdvancedPoC%2Fazuredeploy.json" target="_blank"><img src="http://armviz.io/visualizebutton.png"/></a>
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https://github.com/thomaskrampe/CitrixCloud/raw/master/ARM-Templates/AdvancedPoC/azuredeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
+<a href="http://armviz.io/#/?load=https://github.com/thomaskrampe/CitrixCloud/raw/master/ARM-Templates/AdvancedPoC/azuredeploy.json" target="_blank"><img src="http://armviz.io/visualizebutton.png"/></a>
 
 ## PowerShell
 Just clicking on a Azure Deploy Button is fine so far but in my opion it's far away from automation. So if you prefer PowerShell for deploying this template please use the DeploySimpleXAEPoC.ps1 PowerShell script.
