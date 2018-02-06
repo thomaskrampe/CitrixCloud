@@ -1,0 +1,350 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the administrator account of the new domain"
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "The password for the administrator account of the new domain"
+      }
+    },
+    "domainName": {
+      "type": "string",
+      "metadata": {
+        "description": "The FQDN of the Active Directory Domain to be created"
+      }
+    },
+    "dnsPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "The DNS prefix for the public IP address used by the Load Balancer"
+      }
+    },
+    "_artifactsLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "The location of resources, such as templates and DSC modules, that the template depends on"
+      },
+      "defaultValue": "https://raw.githubusercontent.com/thomaskrampe/CitrixCloud/master/XenApp%20Essentials/ARM-Templates/SimplePoC"
+    },
+    "_artifactsLocationSasToken": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Auto-generated token to access _artifactsLocation"
+      },
+      "defaultValue": ""
+    }
+  },
+  "variables": {
+    "xdsVirtualNetworkName": "xdsVNET",
+    "xdsVirtualNetworkAddressRange": "10.10.0.0/16",
+    "xdsStorageAccountName": "xdsstorage",
+    "xdsDcLBFE": "xdsLBFE",
+    "xdsDcLBBE": "xdsLBBE",
+    "xdsDcRDPNAT": "xdsdc01public",
+    "xdsDcNicName": "xdsdc01Nic",
+    "xdsDcNicIPAddress": "10.10.1.4",
+    "xdsDcVMName": "xdsdc01",
+    "xdsSubnetName": "xdsFronendSN",
+    "xdsSubnetAddressPrefix": "10.10.1.0/24",
+    "xdsDcPublicIPAddressName": "xdsdc01PIP",
+    "xdsDcAvailabilitySetName": "xdsDomainControllerAS",
+    "xdsDcLBName": "xdsDomainControllerLB"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[variables('xdsStorageAccountName')]",
+      "apiVersion": "2016-01-01",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "Storage",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('xdsDcPublicIPAddressName')]",
+      "apiVersion": "2016-03-30",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('dnsPrefix')]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/availabilitySets",
+      "name": "[variables('xdsDcAvailabilitySetName')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "name": "VNet",
+      "apiVersion": "2016-02-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'), '/nestedtemplates/vnet.json', parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "virtualNetworkName": {
+            "value": "[variables('xdsVirtualNetworkName')]"
+          },
+          "virtualNetworkAddressRange": {
+            "value": "[variables('xdsVirtualNetworkAddressRange')]"
+          },
+          "subnetName": {
+            "value": "[variables('xdsSubnetName')]"
+          },
+          "subnetRange": {
+            "value": "[variables('xdsSubnetAddressPrefix')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/loadBalancers",
+      "name": "[variables('xdsDcLBName')]",
+      "apiVersion": "2016-03-30",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', variables('xdsDcPublicIPAddressName'))]"
+      ],
+      "properties": {
+        "frontendIPConfigurations": [
+          {
+            "name": "[variables('xdsDcLBFE')]",
+            "properties": {
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('xdsDcPublicIPAddressName'))]"
+              }
+            }
+          }
+        ],
+        "backendAddressPools": [
+          {
+            "name": "[variables('xdsDcLBBE')]"
+          }
+        ],
+        "inboundNatRules": [
+          {
+            "name": "[variables('xdsDcRDPNAT')]",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[resourceId('Microsoft.Network/loadBalancers/frontendIPConfigurations', variables('xdsDcLBName'), variables('xdsDcLBFE'))]"
+              },
+              "protocol": "tcp",
+              "frontendPort": 3389,
+              "backendPort": 3389,
+              "enableFloatingIP": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('xdsDcNicName')]",
+      "apiVersion": "2016-03-30",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "Microsoft.Resources/deployments/VNet",
+        "[resourceId('Microsoft.Network/loadBalancers', variables('xdsDcLBName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[variables('xdsDcNicIPAddress')]",
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('xdsVirtualNetworkName'), variables('xdsSubnetName'))]"
+              },
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', variables('xdsDcLBName'), variables('xdsDcLBBE'))]"
+                }
+              ],
+              "loadBalancerInboundNatRules": [
+                {
+                  "id": "[resourceId('Microsoft.Network/loadBalancers/inboundNatRules', variables('xdsDcLBName'), variables('xdsDcRDPNAT'))]"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('xdsDcVMName')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('xdsStorageAccountName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', variables('xdsDcNicName'))]",
+        "[resourceId('Microsoft.Compute/availabilitySets', variables('xdsDcAvailabilitySetName'))]",
+        "[resourceId('Microsoft.Network/loadBalancers', variables('xdsDcLBName'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_D1_v2"
+        },
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets', variables('xdsDcAvailabilitySetName'))]"
+        },
+        "osProfile": {
+          "computerName": "[variables('xdsDcVMName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "2016-Datacenter",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "osdisk",
+            "vhd": {
+              "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', variables('xdsStorageAccountName'))).primaryEndpoints.blob, 'vhds/', variables('xdsDcVMName'), '-os-disk.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "vhd": {
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', variables('xdsStorageAccountName'))).primaryEndpoints.blob, 'vhds/', variables('xdsDcVMName'), '-data-disk.vhd')]"
+              },
+              "name": "[concat(variables('xdsDcVMName'), '-data-disk')]",
+              "caching": "None",
+              "createOption": "Empty",
+              "diskSizeGB": "1000",
+              "lun": 0
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('xdsDcNicName'))]"
+            }
+          ]
+        }
+      },
+      "resources": [
+        {
+          "type": "extensions",
+          "name": "CreateADForest",
+          "apiVersion": "2015-06-15",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Compute/virtualMachines', variables('xdsDcVMName'))]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.19",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+              "ModulesUrl": "[concat(parameters('_artifactsLocation'), '/DSC/CreateADPDC.zip', parameters('_artifactsLocationSasToken'))]",
+              "ConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
+              "Properties": {
+                "DomainName": "[parameters('domainName')]",
+                "AdminCreds": {
+                  "UserName": "[parameters('adminUsername')]",
+                  "Password": "PrivateSettingsRef:AdminPassword"
+                }
+              }
+            },
+            "protectedSettings": {
+              "Items": {
+                "AdminPassword": "[parameters('adminPassword')]"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "name": "UpdateVNetDNS",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('xdsDcVMName'), 'CreateADForest')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'), '/nestedtemplates/vnet-with-dns-server.json', parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "virtualNetworkName": {
+            "value": "[variables('xdsVirtualNetworkName')]"
+          },
+          "virtualNetworkAddressRange": {
+            "value": "[variables('xdsVirtualNetworkAddressRange')]"
+          },
+          "subnetName": {
+            "value": "[variables('xdsSubnetName')]"
+          },
+          "subnetRange": {
+            "value": "[variables('xdsSubnetAddressPrefix')]"
+          },
+          "DNSServerAddress": {
+            "value": [
+              "[variables('xdsDcNicIPAddress')]"
+            ]
+          }
+        }
+      }
+    },
+    { 
+      "apiVersion": "2015-01-01", 
+      "name": "[concat('nestedDeployment',copyIndex())]", 
+      "type": "Microsoft.Resources/deployments",
+      "copy": {
+        "name": "EnvironmentCopySet",
+        "count": 2,
+        "mode": "serial"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('xdsDcVMName'), 'CreateADForest')]"
+      ], 
+      "properties": { 
+        "mode": "Incremental", 
+        "templateLink": {
+        "uri": "[concat(parameters('_artifactsLocation'), '/nestedtemplates/VMdeploy.json', parameters('_artifactsLocationSasToken'))]",
+        "contentVersion": "1.0.0.0"
+          }, 
+        "parameters": { 
+          "existingVNETName":{"value": "[variables('xdsVirtualNetworkName')]"},
+          "existingSubnetName":{"value": "[variables('xdsSubnetName')]"},
+          "dnsLabelPrefix":{"value": "[concat('xdsvm1', copyIndex())]"},
+          "domainToJoin":{"value": "[parameters('domainName')]"},
+          "domainUsername":{"value": "[parameters('adminUsername')]"},
+          "domainPassword":{"value": "[parameters('adminPassword')]"},
+          "vmAdminUsername":{"value": "[parameters('adminUsername')]"},
+          "vmAdminPassword":{"value": "[parameters('adminPassword')]"},
+          "storageAccountName":{"value": "[variables('xdsStorageAccountName')]"}
+          } 
+      } 
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "itemDisplayName": "Creates a Citrix XenApp / XenDesktop Services PoC environment on Azure with a new AD Forest",
+  "description": "This template creates three new Azure VM's. It configures the first VM to be an AD DC for a new Forest and create a Citrix Cloud Connector VM and a Golden Master Image VM which are both domain joined.",
+  "summary": "This template creates an Citrix XenApp / XenDesktop Services PoC with AD, Cloud Connector and Golden Master Server.",
+  "githubUsername": "thomaskrampe",
+  "dateUpdated": "2018-02-06"
+}
