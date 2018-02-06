@@ -69,6 +69,12 @@
       "metadata": {
         "description": "The name for the storage account"
       }
+    },
+    "CCAvailabilitySetName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name for the availability set"
+      }
     }
   },
   "variables": {
@@ -102,6 +108,13 @@
         "name": "Standard_LRS"
       },
       "kind": "Storage",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Compute/availabilitySets",
+      "name": "[parameters('CCAvailabilitySetName')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
       "properties": {}
     },
     {
@@ -141,6 +154,9 @@
       "properties": {
         "hardwareProfile": {
           "vmSize": "[parameters('vmSize')]"
+        },
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('CCAvailabilitySetName'))]"
         },
         "osProfile": {
           "computerName": "[parameters('dnsLabelPrefix')]",

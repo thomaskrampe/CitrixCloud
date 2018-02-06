@@ -55,6 +55,7 @@
     "xdsSubnetAddressPrefix": "10.10.1.0/24",
     "xdsDcPublicIPAddressName": "xdsdc01PIP",
     "xdsDcAvailabilitySetName": "xdsDomainControllerAS",
+    "xdsCCAvailabilitySetName": "xdsCloudConnectorsAS",
     "xdsDcLBName": "xdsDomainControllerLB"
   },
   "resources": [
@@ -342,7 +343,8 @@
           "domainPassword":{"value": "[parameters('adminPassword')]"},
           "vmAdminUsername":{"value": "[parameters('adminUsername')]"},
           "vmAdminPassword":{"value": "[parameters('adminPassword')]"},
-          "storageAccountName":{"value": "[variables('xdsStorageAccountName')]"}
+          "storageAccountName":{"value": "[variables('xdsStorageAccountName')]"},
+          "CCAvailabilitySetName": {"value": "[variables('xdsCCAvailabilitySetName')]"}
           } 
       } 
     }
