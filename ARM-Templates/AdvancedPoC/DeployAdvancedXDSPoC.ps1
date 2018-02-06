@@ -27,7 +27,7 @@
         DeployAdvancedXDSPoC.ps1 -SubscriptionID "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" -ResourceGroupName "XDS-RG" -ResourceGroupLocation "Northeurope" -DeploymentName "MyDeployment"
 
  .LINK
-        https://github.com/thomaskrampe/CitrixCloud/tree/master/XenApp%20Essentials/ARM-Templates/AdvancedPoC 
+        https://github.com/thomaskrampe/CitrixCloud/raw/master/ARM-Templates/AdvancedPoC 
                  
  .NOTES
         Author        : Thomas Krampe | t.krampe@loginconsultants.de
@@ -48,9 +48,9 @@ param (
     [Parameter(Mandatory)]
     [string]$DeploymentName,    
 
-    [string]$TemplateFilePath = "https://raw.githubusercontent.com/thomaskrampe/CitrixCloud/master/XenApp%20Essentials/ARM-Templates/AdvancedPoC/azuredeploy.json",  
+    [string]$TemplateFilePath = "https://raw.githubusercontent.com/thomaskrampe/CitrixCloud/raw/master/ARM-Templates/AdvancedPoC/azuredeploy.json",  
  
-    [string]$ParametersFilePath = "https://raw.githubusercontent.com/thomaskrampe/CitrixCloud/master/XenApp%20Essentials/ARM-Templates/AdvancedPoC/azuredeploy.parameters.json"
+    [string]$ParametersFilePath = "https://raw.githubusercontent.com/thomaskrampe/CitrixCloud/raw/master/ARM-Templates/AdvancedPoC/azuredeploy.parameters.json"
 )
 
 $ErrorActionPreference = "Stop"
