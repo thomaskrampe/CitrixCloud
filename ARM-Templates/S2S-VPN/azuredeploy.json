@@ -42,7 +42,7 @@
     },
     "azureVNetAddressPrefix": {
       "type": "string",
-      "defaultValue": "10.0.1.0/16",
+      "defaultValue": "10.20.0.0/16",
       "metadata": {
         "description": "This is the address space for your Azure virtual network. It should be big enough for your needs (eg. 10.0.1.0/16)"
       }
@@ -56,14 +56,14 @@
     },
     "subnetPrefix": {
       "type": "string",
-      "defaultValue": "10.0.1.0/24",
+      "defaultValue": "10.20.1.0/24",
       "metadata": {
         "description": "This is the CIDR block representing your Azure resources. It must be within the virtual network range above (eg. 10.0.1.0/24)"
       }
     },
     "gatewaySubnetPrefix": {
       "type": "string",
-      "defaultValue": "10.0.255.0/27",
+      "defaultValue": "10.20.255.0/27",
       "metadata": {
         "description": "This is the CIDR block for your gateway subnet. We don't need a big range but it must be within the virtual network range as well (eg. 10.0.255.0/27 should give you enough space)"
       }

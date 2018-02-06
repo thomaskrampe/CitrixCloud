@@ -27,7 +27,7 @@
         DeploySimpleXAEPoC.ps1 -SubscriptionID "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" -ResourceGroupName "XAE-RG" -ResourceGroupLocation "Northeurope" -DeploymentName "MyDeployment"
 
  .LINK
-        https://github.com/thomaskrampe/CitrixCloud/tree/master/XenApp%20Essentials/ARM-Templates/SimplePoC 
+        https://github.com/thomaskrampe/CitrixCloud/raw/master/ARM-Templates/SimplePoC 
                  
  .NOTES
         Author        : Thomas Krampe | t.krampe@loginconsultants.de
@@ -48,9 +48,9 @@ param (
     [Parameter(Mandatory)]
     [string]$DeploymentName,    
 
-    [string]$TemplateFilePath = "https://raw.githubusercontent.com/thomaskrampe/CitrixCloud/master/XenApp%20Essentials/ARM-Templates/SimplePoC/azuredeploy.json",  
+    [string]$TemplateFilePath = "https://github.com/thomaskrampe/CitrixCloud/raw/master/ARM-Templates/SimplePoC/azuredeploy.json",  
  
-    [string]$ParametersFilePath = "https://raw.githubusercontent.com/thomaskrampe/CitrixCloud/master/XenApp%20Essentials/ARM-Templates/SimplePoC/azuredeploy.parameters.json"
+    [string]$ParametersFilePath = "https://github.com/thomaskrampe/CitrixCloud/raw/master/ARM-Templates/SimplePoC/azuredeploy.parameters.json"
 )
 
 $ErrorActionPreference = "Stop"

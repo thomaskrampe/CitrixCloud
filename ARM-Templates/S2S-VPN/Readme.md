@@ -22,10 +22,10 @@ Please do not be restless the deployment takes a while (approx. 20 minutes).
 
 Want to try it? All you have to do is clicking the **Deploy to Azure** button below.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fthomaskrampe%2FCitrixCloud%2Fmaster%2FXenApp%20Essentials%2FARM-Templates%2FS2S-VPN%2Fazuredeploy.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2Fthomaskrampe%2FCitrixCloud%2Fraw%2Fmaster%2FARM-Templates%2FS2S-VPN%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
-<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Fthomaskrampe%2FCitrixCloud%2Fmaster%2FXenApp%20Essentials%2FARM-Templates%2FS2S-VPN%2Fazuredeploy.json" target="_blank">
+<a href="http://armviz.io/#/?load=https%3A%2F%2Fgithub.com%2Fthomaskrampe%2FCitrixCloud%2Fraw%2Fmaster%2FARM-Templates%2FS2S-VPN%2Fazuredeploy.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
