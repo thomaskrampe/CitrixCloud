@@ -48,9 +48,9 @@ param (
     [Parameter(Mandatory)]
     [string]$DeploymentName,    
 
-    [string]$TemplateFilePath = "https://raw.githubusercontent.com/thomaskrampe/CitrixCloud/raw/master/ARM-Templates/AdvancedPoC/azuredeploy.json",  
+    [string]$TemplateFilePath = "https://github.com/thomaskrampe/CitrixCloud/raw/master/ARM-Templates/AdvancedPoC/azuredeploy.json",  
  
-    [string]$ParametersFilePath = "https://raw.githubusercontent.com/thomaskrampe/CitrixCloud/raw/master/ARM-Templates/AdvancedPoC/azuredeploy.parameters.json"
+    [string]$ParametersFilePath = "https://github.com/thomaskrampe/CitrixCloud/raw/master/ARM-Templates/AdvancedPoC/azuredeploy.parameters.json"
 )
 
 $ErrorActionPreference = "Stop"
